@@ -48,17 +48,45 @@ The screenshots for the pipeline was created using the following:
 
 ### Reflection
 
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
-
-1. Grayscale
+### Grayscale
 
    For very test image example , we convert the image to grayscale, since its much convenient to apply image transformation function on a grayscale image than a rgb image also the cost of operation is higher and its a very common technique to apply image transformation functions to a grayscale image and apply it as a mask to the original image.
    
   ![alt text][image1]
 
-2.Gaussian Blur
+### Gaussian Blur
 
    We next smooth the gray scale image with a gaussian kernel of size 7 , so that 
+   we can remove noises from the image and make the subsequent image processing steps    easier.
+   
+   ![alt text][image2]
+   
+### Canny Edge Detection
+
+   We use the canny edge detection to find the edges in the image, since we know that lane lines are well-defined edges. we can hence use canny detection to get edges and also other edges to be pruned by ROI step next.
+   
+   ![alt text][image3]
+   
+### Region of Interest
+
+   After the edge detection setep, we have the scene with many edges, but we are only interested in the edges that form the lane hense we use a trapezoid to mask the scene.
+   
+   ![alt text][image4]
+   
+### Hough Transformation
+
+   After the canny edge detection step, all we were left were the edges in the image.
+   We then applied ROI to concentrate only on line that form the present lane.
+   We use Hough Transform to generate these lines exclusively for the present lane.
+   
+   ![alt text][image5]
+   
+### Draw Lines
+
+   I was unable to extrapolate the lines, due to technical issues , and this function
+   uses the default functionality. 
+   
+   ![alt text][image6]
 
 
 ### 2. Identify potential shortcomings with your current pipeline
