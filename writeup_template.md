@@ -1,24 +1,50 @@
 # **Finding Lane Lines on the Road** 
 
-## Writeup Template
 
-### iHwq
-You can use this file as a template for your writeup if you want to submit it as a markdown file. But feel free to use some other method and submit a pdf if you prefer.
+### Setup
+
+Runs Jupyter Notebook in a Docker container with `udacity/carnd-term1-starter-kit` image from ![Udacity][docker installation].
+
+```
+cd <project-directory>
+docker run -it --rm -p 8888:8888 -v `pwd`:/src udacity/carnd-term1-starter-kit
+```
 
 ---
 
 **Finding Lane Lines on the Road**
 
-The goals / steps of this project are the following:
-* Make a pipeline that finds lane lines on the road
-* Reflect on your work in a written report
+The Project #1 for Udacity’s Self-Driving Car Nanodegree (SDCND) is about creating a pipeline that detects lane lines in images. 
+We were previded with several image files, to test our pipeline and we have applied the same pipeline to a video example that was also provided to us, since videos are also streams of images. We made use of the helper functions to implement the pipeline which had code-snippets form the quiz that we have completed earlier. 
 
+We make several improvements on the lane detection method and finish the project by making the system robust enough to work on examples that have curved roads and make the example work.
 
 [//]: # (Image References)
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
+![alt text][image0]
 
 ---
+
+** My Pipeline **
+
+My Pipeline consists of 6 stages:
+
+1. Grayscale
+2. Gaussian Blur
+3. Canny Edge Detection
+4. Region of Interest — Create Vertices
+5. Hough Transform — Average Lines
+6. Draw Lines
+
+The screenshots for the pipeline was created using the following:
+
+    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"gray.jpg"),gray)
+    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"blur_gray.jpg"),blur_gray)
+    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"edges.jpg"),edges)
+    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"masked_edges.jpg"),masked_edges)
+    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"line_image.jpg"),line_image)
+    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"lines_image.jpg"),lines_image)
+   
 
 ### Reflection
 
@@ -43,6 +69,9 @@ Another shortcoming could be ...
 
 ### 3. Suggest possible improvements to your pipeline
 
-A possible improvement would be to ...
+My selection of the vertices are hard-coded and 
 
-Another potential improvement could be to ...
+
+[image0]: ./test_images/solidWhiteCurve.jpg "Original Image"
+[image1]: ./test_images_output/report_hough_solidWhiteCurve.jpg "Hough Lines"
+[image2]: ./test_images_output/annotated_solidWhiteCurve.jpg "Hough Lines on image"
