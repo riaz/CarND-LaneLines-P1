@@ -25,53 +25,72 @@ We make several improvements on the lane detection method and finish the project
 
 ---
 
-** My Pipeline **
+### My Pipeline
 
 My Pipeline consists of 6 stages:
 
 1. Grayscale
 2. Gaussian Blur
 3. Canny Edge Detection
-4. Region of Interest — Create Vertices
-5. Hough Transform — Average Lines
+4. Region of Interest 
+5. Hough Transform 
 6. Draw Lines
 
 The screenshots for the pipeline was created using the following:
 
-    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"gray.jpg"),gray)
-    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"blur_gray.jpg"),blur_gray)
-    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"edges.jpg"),edges)
-    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"masked_edges.jpg"),masked_edges)
-    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"line_image.jpg"),line_image)
-    > cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"lines_image.jpg"),lines_image)
+     cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"gray.jpg"),gray)
+     cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"blur_gray.jpg"),blur_gray)
+     cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"edges.jpg"),edges)
+     cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"masked_edges.jpg"),masked_edges)
+     cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"line_image.jpg"),line_image)
+     cv2.imwrite(os.path.join(IMAGE_SAVE_PATH,"lines_image.jpg"),lines_image)
    
 
 ### Reflection
 
 ### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
+1. Grayscale
 
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
+   For very test image example , we convert the image to grayscale, since its much convenient to apply image transformation function on a grayscale image than a rgb image also the cost of operation is higher and its a very common technique to apply image transformation functions to a grayscale image and apply it as a mask to the original image.
+   
+  ![alt text][image1]
 
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
+2.Gaussian Blur
 
-![alt text][image1]
+   We next smooth the gray scale image with a gaussian kernel of size 7 , so that 
 
 
 ### 2. Identify potential shortcomings with your current pipeline
 
+The short-coming of the current pipeline is that I has out of time implemeting the drawLines() function to be able to extrapolatate the lane lines, since I was facing 
+technical dificulties working with the docker instance.
 
-One potential shortcoming would be what would happen when ... 
+Proposed solution:
 
-Another shortcoming could be ...
+I was considering a solution where I would sort the points in the lane lines,
+based on the sides they appear and given that I have two sets of points belonging to each lane, I would next
+
+    i.  Find the Top, Bottom and Middle Points 
+    ii. In order to make sure the lines are same size, we change the topmost(y) to the
+        max(left,right) lane
+    iii.We then use the PolyLine() function to draw the lines that would even work
+        with the challenge example.
+
 
 
 ### 3. Suggest possible improvements to your pipeline
 
-My selection of the vertices are hard-coded and 
+My selection of the vertices are hard-coded and and assumed the position of the camera
+relative to the car. It would be better if the vertices were a function of the
+steering action.
 
 
 [image0]: ./test_images/solidWhiteCurve.jpg "Original Image"
-[image1]: ./test_images_output/report_hough_solidWhiteCurve.jpg "Hough Lines"
-[image2]: ./test_images_output/annotated_solidWhiteCurve.jpg "Hough Lines on image"
+[image1]: ./test_image_output/gray.jpg "Gray Image"
+[image2]: ./test_image_output/blur_gray.jpg "Smoothed Image"
+[image3]: ./test_image_output/edges.jpg "Edges Image"
+[image4]: ./test_image_output/masked_edges.jpg "Masked Image"
+[image5]: ./test_image_output/line_image.jpg "HoughLines Image"
+[image6]: ./test_image_output/lines_image.jpg "Output Image"
+
